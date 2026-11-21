@@ -15,3 +15,15 @@ jobs:
 
       - name: Build image
         run: docker build --pull --tag "s13-training-camps:${GITHUB_SHA}" .
+
+      - name: Show image
+        run: |
+          image="s13-training-camps:${GITHUB_SHA}"
+          image_id="$(docker image inspect "$image" --format '{{.Id}}')"
+          {
+            echo "## Docker image"
+            echo '```'
+            echo "$image"
+            echo "$image_id"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
